@@ -23,16 +23,16 @@ class Bool:
         self.account = session_name + '.session'
         self.thread = thread
         self.payload = None
-        self.proxy = f"{ config.PROXY['TYPE']['REQUESTS']}: //{proxy}" if proxy is not None else None
+        self.proxy = f"{ config.PROXY['TYPE']['REQUESTS']}://{proxy}" if proxy is not None else None
         connector = ProxyConnector.from_url(self.proxy) if proxy else aiohttp.TCPConnector(verify_ssl=False)
 
         if proxy: 
             proxy = {
                 "scheme": config.PROXY['TYPE']['TG'],
-                "hostname": proxy.split(": ")[1].split("@")[1],
-                "port": int(proxy.split(": ")[2]),
-                "username": proxy.split(": ")[0],
-                "password": proxy.split(": ")[1].split("@")[0]
+                "hostname": proxy.split(":")[1].split("@")[1],
+                "port": int(proxy.split(":")[2]),
+                "username": proxy.split(":")[0],
+                "password": proxy.split(":")[1].split("@")[0]
             }
 
         self.client = Client(
